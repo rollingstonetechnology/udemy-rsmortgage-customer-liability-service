@@ -43,7 +43,7 @@ public class Liability {
 	
 	@OneToOne
 	@JoinColumn(name="liability_type_id")
-	private LiabilityType liabilityType;
+	private LiabilityType investmentType;
 
 	@Column(nullable = false)
 	private double originalTotalLiability;
@@ -86,12 +86,12 @@ public class Liability {
 		this.dateMaturing = dateMaturing;
 	}
 
-	public LiabilityType getLiabilityType() {
-		return liabilityType;
+	public LiabilityType getInvestmentType() {
+		return investmentType;
 	}
 
-	public void setLiabilityType(LiabilityType liabilityType) {
-		this.liabilityType = liabilityType;
+	public void setInvestmentType(LiabilityType investmentType) {
+		this.investmentType = investmentType;
 	}
 
 	public double getOriginalTotalLiability() {
@@ -140,84 +140,20 @@ public class Liability {
 
 	@Override
 	public String toString() {
-		return "Liability [id=" + id + ", fromDate=" + fromDate + ", dateMaturing=" + dateMaturing + ", liabilityType="
-				+ liabilityType + ", originalTotalLiability=" + originalTotalLiability + ", currentTotalLiability="
+		return "Liability [id=" + id + ", fromDate=" + fromDate + ", dateMaturing=" + dateMaturing + ", investmentType="
+				+ investmentType + ", originalTotalLiability=" + originalTotalLiability + ", currentTotalLiability="
 				+ currentTotalLiability + ", paymentFrequency=" + paymentFrequency + ", periodEMI=" + periodEMI
 				+ ", customer=" + customer + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(currentTotalLiability);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
-		result = prime * result + ((dateMaturing == null) ? 0 : dateMaturing.hashCode());
-		result = prime * result + ((fromDate == null) ? 0 : fromDate.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((liabilityType == null) ? 0 : liabilityType.hashCode());
-		temp = Double.doubleToLongBits(originalTotalLiability);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((paymentFrequency == null) ? 0 : paymentFrequency.hashCode());
-		result = prime * result + Float.floatToIntBits(periodEMI);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Liability other = (Liability) obj;
-		if (Double.doubleToLongBits(currentTotalLiability) != Double.doubleToLongBits(other.currentTotalLiability))
-			return false;
-		if (customer == null) {
-			if (other.customer != null)
-				return false;
-		} else if (!customer.equals(other.customer))
-			return false;
-		if (dateMaturing == null) {
-			if (other.dateMaturing != null)
-				return false;
-		} else if (!dateMaturing.equals(other.dateMaturing))
-			return false;
-		if (fromDate == null) {
-			if (other.fromDate != null)
-				return false;
-		} else if (!fromDate.equals(other.fromDate))
-			return false;
-		if (id != other.id)
-			return false;
-		if (liabilityType == null) {
-			if (other.liabilityType != null)
-				return false;
-		} else if (!liabilityType.equals(other.liabilityType))
-			return false;
-		if (Double.doubleToLongBits(originalTotalLiability) != Double.doubleToLongBits(other.originalTotalLiability))
-			return false;
-		if (paymentFrequency == null) {
-			if (other.paymentFrequency != null)
-				return false;
-		} else if (!paymentFrequency.equals(other.paymentFrequency))
-			return false;
-		if (Float.floatToIntBits(periodEMI) != Float.floatToIntBits(other.periodEMI))
-			return false;
-		return true;
-	}
-
-	public Liability(long id, Date fromDate, Date dateMaturing, LiabilityType liabilityType,
+	public Liability(long id, Date fromDate, Date dateMaturing, LiabilityType investmentType,
 			double originalTotalLiability, double currentTotalLiability, String paymentFrequency, float periodEMI,
 			Customer customer) {
 		super();
 		this.id = id;
 		this.fromDate = fromDate;
 		this.dateMaturing = dateMaturing;
-		this.liabilityType = liabilityType;
+		this.investmentType = investmentType;
 		this.originalTotalLiability = originalTotalLiability;
 		this.currentTotalLiability = currentTotalLiability;
 		this.paymentFrequency = paymentFrequency;

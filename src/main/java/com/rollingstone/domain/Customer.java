@@ -38,10 +38,20 @@ public class Customer {
 
 	@Column(nullable = false)
 	private String lastName;
-
+	
 	@Column(nullable = false)
 	private String socialSecurityNumber;
-	
+
+	public String getSocialSecurityNumber() {
+		return socialSecurityNumber;
+	}
+
+
+	public void setSocialSecurityNumber(String socialSecurityNumber) {
+		this.socialSecurityNumber = socialSecurityNumber;
+	}
+
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dob", unique = true, nullable = false, length = 10)
 	private Date dateOfBirth;
