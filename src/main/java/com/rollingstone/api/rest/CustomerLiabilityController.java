@@ -39,7 +39,7 @@ public class CustomerLiabilityController extends AbstractRestController {
             produces = {"application/json", "application/xml"})
     @ResponseStatus(HttpStatus.CREATED)
     public void createCustomerLiability(@RequestBody Liability liability,
-                                 HttpServletRequest request, HttpServletResponse response) {
+                                 HttpServletRequest request, HttpServletResponse response) throws Exception {
     	Liability createdLiability = this.customerLiabilityService.createLiability(liability);
         response.setHeader("Location", request.getRequestURL().append("/").append(createdLiability.getId()).toString());
     }
@@ -109,7 +109,7 @@ public class CustomerLiabilityController extends AbstractRestController {
             produces = {"application/json", "application/xml"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCustomerLiability(@PathVariable("id") Long id, @RequestBody Liability liability,
-                                 HttpServletRequest request, HttpServletResponse response) {
+                                 HttpServletRequest request, HttpServletResponse response) throws Exception {
         checkResourceFound(this.customerLiabilityService.getLiability(id));
         if (id != liability.getId()) throw new HTTP400Exception("ID doesn't match!");
         this.customerLiabilityService.updateLiability(liability);

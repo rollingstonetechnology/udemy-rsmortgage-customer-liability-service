@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.rollingstone.dao.jpa.RsMortgageCustomerLiabilityRepository;
 import com.rollingstone.domain.Liability;
 import com.rollingstone.domain.Customer;
+import com.rollingstone.domain.Investment;
 
 
 /*
@@ -34,19 +35,67 @@ public class RsMortgageCustomerLiabilityService {
     @Autowired
     GaugeService gaugeService;
 
+    @Autowired
+   	private CustomerClient customerClient;
+    
     public RsMortgageCustomerLiabilityService() {
     }
 
-    public Liability createLiability(Liability liability) {
-        return customerLiabilityRepository.save(liability);
+    public Liability createLiability(Liability liability) throws Exception {
+    	Liability createdLiability = null;
+    	if (liability != null && liability.getCustomer() != null){
+    		
+    		log.info("In service liability create"+ liability.getCustomer().getId());
+    		if (customerClient == null){
+        		log.info("In customerClient null got customer");
+    		}
+    		else {
+    			log.info("In customerClient not null got customer");
+    		}
+    		
+    		Customer customer = customerClient.getCustomer((new Long(liability.getCustomer().getId())));
+    		
+    		if (customer != null){
+    			createdLiability  = customerLiabilityRepository.save(liability);
+    		}else {
+    			log.info("Invalid Customer");
+    			throw new Exception("Invalid Customer");
+    		}
+    	}
+    	else {
+    			throw new Exception("Invalid Customer");
+    	}
+        return createdLiability;
     }
 
     public Liability getLiability(long id) {
         return customerLiabilityRepository.findOne(id);
     }
 
-    public void updateLiability(Liability liability) {
-    	customerLiabilityRepository.save(liability);
+    public void updateLiability(Liability liability) throws Exception {
+    	Liability createdLiability = null;
+    	if (liability != null && liability.getCustomer() != null){
+    		
+    		log.info("In service liability create"+ liability.getCustomer().getId());
+    		if (customerClient == null){
+        		log.info("In customerClient null got customer");
+    		}
+    		else {
+    			log.info("In customerClient not null got customer");
+    		}
+    		
+    		Customer customer = customerClient.getCustomer((new Long(liability.getCustomer().getId())));
+    		
+    		if (customer != null){
+    			createdLiability  = customerLiabilityRepository.save(liability);
+    		}else {
+    			log.info("Invalid Customer");
+    			throw new Exception("Invalid Customer");
+    		}
+    	}
+    	else {
+    			throw new Exception("Invalid Customer");
+    	}
     }
 
     public void deleteLiability(Long id) {
