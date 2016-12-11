@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.rollingstone.dao.jpa.RsMortgageCustomerLiabilityRepository;
 import com.rollingstone.domain.Liability;
 import com.rollingstone.domain.Customer;
@@ -41,6 +42,7 @@ public class RsMortgageCustomerLiabilityService {
     public RsMortgageCustomerLiabilityService() {
     }
 
+    @HystrixCommand(fallbackMethod = "createLiabilityWithoutValidation")
     public Liability createLiability(Liability liability) throws Exception {
     	Liability createdLiability = null;
     	if (liability != null && liability.getCustomer() != null){
@@ -65,6 +67,13 @@ public class RsMortgageCustomerLiabilityService {
     	else {
     			throw new Exception("Invalid Customer");
     	}
+        return createdLiability;
+    }
+    
+    public Liability createLiabilityWithoutValidation(Liability liability) throws Exception {
+    	Liability createdLiability = null;
+		log.info("Customer Validation Failed. Creating Liability without customer validation");
+    	createdLiability  = customerLiabilityRepository.save(liability);
         return createdLiability;
     }
 
